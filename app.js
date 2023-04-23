@@ -69,6 +69,15 @@ app.use(
 
 // Cors
 app.use(cors());
+//If we wanted to allow only certain urls to access our url (i.e. api.tourio.com) ;simple requiest;
+// app.use(
+//     cors({
+//         origin: "https://www.tourio.com",
+//     })
+// );
+
+// Options is just another http method like GET, POST which is used to check if the actual request is safe to execute
+app.options("*", cors());
 
 // Body parser, reading data from the body into req.body
 app.use(express.json({ limit: "10kb" }));
