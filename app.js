@@ -22,6 +22,9 @@ const reviewRouter = require("./routes/reviews");
 const viewRouter = require("./routes/viewRoutes");
 const bookingRouter = require("./routes/bookings");
 
+// Controllers
+const { webhookCheckout } = require("./controllers/BookingController");
+
 const app = express();
 
 // trust proxies
@@ -50,6 +53,9 @@ const limiter = rateLimit({
 });
 // Limit requests from the same IP
 app.use("/api", limiter);
+
+// WebHooks
+app.post("/webhook-checkout", express.raw({ type: "application/json" }), webhookCheckout);
 
 // Security HTTP headers
 app.use(
