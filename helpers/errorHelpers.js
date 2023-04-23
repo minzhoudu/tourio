@@ -19,6 +19,7 @@ exports.sendErrorDev = (err, req, res) => {
 };
 
 exports.sendErrorProd = (err, req, res) => {
+    console.log(err);
     // API
     if (req.originalUrl.startsWith("/api")) {
         if (!err.isOperational) {
