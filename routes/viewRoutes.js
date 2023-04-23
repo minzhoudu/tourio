@@ -1,9 +1,10 @@
 const express = require("express");
 router = express.Router();
 
-const { getOverview, getTour, getLoginForm, getUserAccount, getMyTours } = require("../controllers/viewController");
+const { getOverview, getTour, getLoginForm, getUserAccount, getMyTours, alerts } = require("../controllers/viewController");
 const { isLoggedIn, isAuthenticated } = require("../controllers/AuthController");
 
+router.use(alerts);
 // Rendering routes
 router.get("/account", isAuthenticated, getUserAccount);
 router.get("/my-tours", isAuthenticated, getMyTours);
