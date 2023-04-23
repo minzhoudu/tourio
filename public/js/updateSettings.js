@@ -7,7 +7,7 @@ export const updateInfo = async (data, type) => {
     try {
         saveBtn.innerText = "Saving your changes...";
 
-        const url = type === "password" ? "http://127.0.0.1:3000/api/v1/users/updatePassword" : "http://127.0.0.1:3000/api/v1/users/updateInfo";
+        const url = type === "password" ? "/api/v1/users/updatePassword" : "/api/v1/users/updateInfo";
         const updatedUser = await axios({
             method: "PATCH",
             url,

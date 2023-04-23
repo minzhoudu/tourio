@@ -8,6 +8,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
+const compression = require("compression");
 // const cors = require("cors");
 
 // Handlers
@@ -35,7 +36,6 @@ app.use(express.static(path.join(__dirname, "public")));
 //! MIDDLEWARES
 
 // Development logging
-console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
 }
@@ -69,6 +69,9 @@ app.use(mongoSanitize());
 
 // Data sanitization against XSS (html injection)
 app.use(xss());
+
+// Compressing all the text sent to client (HTML, JSON...)
+app.use(compression());
 
 // Prevent parameter polution (i.e: we set same queries /tours?sort=duration&sort=price)
 app.use(
