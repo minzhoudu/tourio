@@ -18,7 +18,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     const url = `${req.protocol}://${req.get("host")}/account`;
 
     await new Email(newUser, url).sendWelcome();
-    sendJwtWithResponse(newUser, 201, res);
+    sendJwtWithResponse(newUser, 201, req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -38,7 +38,7 @@ exports.login = catchAsync(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
 
     // send token to the client
-    sendJwtWithResponse(user, 200, res);
+    sendJwtWithResponse(user, 200, req, res);
 });
 
 exports.logout = (_, res) => {
@@ -99,7 +99,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     // updated in the userModel pre-save middleware only if the document is not newly created, but updated
 
     // 4. log in the user, send JWT
-    sendJwtWithResponse(user, 200, res);
+    sendJwtWithResponse(user, 200, req, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -118,7 +118,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     //?didn't use user.findOneAndUpdate because the validation it he userModel woultn't work (This keyword wouldn't point to the user document)
 
     // 4. login user, send JWT
-    sendJwtWithResponse(user, 200, res);
+    sendJwtWithResponse(user, 200, req, res);
 });
 
 //Prevents user to access the page when not logged in

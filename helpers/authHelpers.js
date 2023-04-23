@@ -11,7 +11,7 @@ exports.checkToken = async (token) => {
     return await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 };
 
-exports.sendJwtWithResponse = (user, statusCode, res) => {
+exports.sendJwtWithResponse = (user, statusCode, req, res) => {
     const token = exports.signToken(user._id);
 
     // httpOnly param protiv CSRF napada, secure param za https
