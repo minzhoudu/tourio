@@ -1,4 +1,5 @@
-// const bcrypt = require("bcrypt");
+"use strict";
+
 const crypto = require("crypto");
 
 const User = require("../models/userModel");
@@ -23,7 +24,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
-
     //check if email and password exist
     if (!email || !password) return next(new AppError("Please provide email and password", 400));
 
