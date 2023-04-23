@@ -9,7 +9,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
-// const cors = require("cors");
+const cors = require("cors");
 
 // Handlers
 const AppError = require("./utils/appError");
@@ -52,13 +52,23 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // Security HTTP headers
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(
+    helmet({
+        crossOriginEmbedderPolicy: false,
+        crossOriginResourcePolicy: {
+            allowOrigins: ["*"],
+        },
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["*"],
+                scriptSrc: ["* data: 'unsafe-eval' 'unsafe-inline' blob:"],
+            },
+        },
+    })
+);
 
-// app.use(
-//     cors({
-//         origin: "*",
-//     })
-// );
+// Cors
+// app.use(cors());
 
 // Body parser, reading data from the body into req.body
 app.use(express.json({ limit: "10kb" }));

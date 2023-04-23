@@ -23,15 +23,10 @@ exports.getTour = catchAsync(async (req, res, next) => {
         });
     if (!tour) return next(new AppError("That tour does not exist", 404));
 
-    res.status(200)
-        .set(
-            "Content-Security-Policy",
-            "connect-src 'self' https://*.mapbox.com ws://127.0.0.1:*/ https://*.stripe.com ;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src https://js.stripe.com/v3 https://cdnjs.cloudflare.com https://api.mapbox.com 'self' blob: ;script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests;"
-        )
-        .render("tour", {
-            title: tour.name,
-            tour,
-        });
+    res.status(200).render("tour", {
+        title: tour.name,
+        tour,
+    });
 });
 
 exports.getLoginForm = (req, res) => {
